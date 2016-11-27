@@ -66,26 +66,34 @@
         <div class="col-lg-6">
             <h4>List of Players </h4>
 
+            <c:if test="${delete_error_message != null}">
+                <div class="alert alert-danger"><c:out value="${delete_error_message}"/></div>
+            </c:if>
+
             <p/>
 
             <table class="table">
                 <thead>
                 <tr>
-
+                    <th>Edit</th>
                     <th>Name</th>
                     <th>Nickname</th>
                     <th>Wins</th>
                     <th>Losses</th>
+                    <th>Delete</th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${all_players}" var="aPlayer">
                     <tr>
+                        <td><a href="/mvc/player/select?id=<c:out value="${aPlayer.id}"/>">Edit Player</a></td>
                         <td><c:out value="${aPlayer.name}"/></td>
                         <td><c:out value="${aPlayer.nickname}"/></td>
                         <td><c:out value="${fn:length(aPlayer.wins)}"/></td>
                         <td><c:out value="${fn:length(aPlayer.losses)}"/></td>
+                        <td><a href="/mvc/player/delete?id=<c:out value="${aPlayer.id}"/>">Remove Player</a></td>
+
 
                     </tr>
                 </c:forEach>

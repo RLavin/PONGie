@@ -64,7 +64,7 @@ public class PongController {
     @RequestMapping(value = "match/delete", method = RequestMethod.GET)
     public String deleteMatch(@RequestParam("id") Long id) {
 
-        // refetch match from db
+        // re fetch match from db
         Match fetchmatch = matchRepository.findOne(id);
 
 
@@ -77,18 +77,29 @@ public class PongController {
     }
 
     @RequestMapping(value = "player/delete", method = RequestMethod.GET)
-    public String deletePlayer(@RequestParam("id") Long id) {
+    public String deletePlayer(@RequestParam("id") Long id, Model model) {
 
-        // refetch match from db
-        Player fetchplayer = playerRepository.findOne(id);
+        // re fetch player from db
+        Player fetchedplayer = playerRepository.findOne(id);
 
 
-        if (fetchplayer != null) {
-            playerRepository.delete(fetchplayer);
+        if ((fetchedplayer.getWins() != null && fetchedplayer.getWins().size()>0 )
+                ||(fetchedplayer.getLosses() != null && fetchedplayer.getLosses().size()>0)) {
+
+            // handle error?
+            model.addAttribute("delete_error_message", "Must delete player's matches first before deleting player!");
+        }
+        else if(fetchedplayer != null){
+
+            playerRepository.delete(fetchedplayer);
+        } else {
+
+            model.addAttribute("delete_error_message", "Player not found!");
+
         }
 
         // send them back to the home player page
-        return "redirect:/mvc/allplayers";
+        return "forward:/mvc/allplayers";
     }
 
     @RequestMapping(value = "player/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -101,20 +112,29 @@ public class PongController {
 
     @RequestMapping(value = "match/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addMatch(DtoMatch aMatch) {
-        log.debug("Match Add called...");
-        Match match = new Match();
-        Player playerLoser = playerRepository.findByName(aMatch.getLoser());
-        Player playerWinner = playerRepository.findByName(aMatch.getWinner());
-        log.debug("loserName:"+aMatch.getLoser());
-        log.debug("loser:"+playerLoser);
-        log.debug("winnerName:"+aMatch.getWinner());
-        log.debug("winner:"+playerWinner);
+        Match match = null;
+       if(aMatch.getId()!=0){
+           //edit
+           match = matchRepository.findOne(aMatch.getId());
+        }else {
+           //new
+            match = new Match();
+       }
+           log.debug("Match Add called...");
 
-        match.setWinningScore(aMatch.getWinningScore());
-        match.setLoosingScore(aMatch.getLoosingScore());
-        match.setDates(aMatch.getDates());
-        match.setLoser(playerLoser);
-        match.setWinner(playerWinner);
+           Player playerLoser = playerRepository.findByName(aMatch.getLoser());
+           Player playerWinner = playerRepository.findByName(aMatch.getWinner());
+           log.debug("loserName:" + aMatch.getLoser());
+           log.debug("loser:" + playerLoser);
+           log.debug("winnerName:" + aMatch.getWinner());
+           log.debug("winner:" + playerWinner);
+
+           match.setWinningScore(aMatch.getWinningScore());
+           match.setLoosingScore(aMatch.getLoosingScore());
+           match.setDates(aMatch.getDates());
+           match.setLoser(playerLoser);
+           match.setWinner(playerWinner);
+
 
         matchRepository.save(match);
 
@@ -149,6 +169,5 @@ public class PongController {
         // send them to the match edit page
         return destination;
     }
-
 
 }

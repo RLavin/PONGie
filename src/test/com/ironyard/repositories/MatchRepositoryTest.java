@@ -52,11 +52,12 @@ public class MatchRepositoryTest {
     @Test
     public void testCreatePlayer() throws Exception{
 
-        Player player =  pRep.save(new Player("Matthew","The destroyer"));
-        Player player2 =  pRep.save(new Player("Sam","The destroyer"));
+        // create new player
+        Player player =  pRep.save(new Player("Raul","The destroyer"));
 
         // player should there
-        Assert.assertNotNull(pRep.findAll());
+        Assert.assertNotNull(pRep.findOne(player.getId()));
+
 
 
     }
@@ -72,5 +73,30 @@ public class MatchRepositoryTest {
         Assert.assertNotNull(mRep.findAll());
 
         pRep.findOne(looser.getId());
+        pRep.findOne(winner.getId());
+
+
     }
+    @Test
+    public void testDeletePlayer() throws Exception{
+
+        // create new player
+        Player player =  pRep.save(new Player("Raul","The destroyer"));
+        pRep.delete(player);
+        // player should not be there
+        Assert.assertNull(pRep.findOne(player.getId()));
+
+    }
+
+    @Test
+    public void testFindAllPlayers() throws Exception{
+
+        // create new player
+        Player player =  pRep.save(new Player("Raul","The destroyer"));
+
+        // player should not be there
+        Assert.assertNotNull(pRep.findAll());
+
+    }
+
 }
