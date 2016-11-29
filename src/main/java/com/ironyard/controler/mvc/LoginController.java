@@ -23,6 +23,16 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * This validates the user credentials to access the application and logs in
+     * if incorrect it displays a error message on the jsp page
+     * @param  password
+     * @param username
+     * @param request
+     * @param model
+     * @return
+     */
+
     @RequestMapping(value = "mvc/login", method = RequestMethod.POST)
     public String login(@RequestParam(value = "password", required = false) String password,
                         @RequestParam(value = "username", required = false) String username,
@@ -43,6 +53,13 @@ public class LoginController {
         log.info("Login attempt result:"+destination);
         return destination;
     }
+
+    /**
+     * Logs you out from your session
+     * And return you back to login screen
+     * @param request
+     * @return
+     */
 
     @RequestMapping(value = "mvc/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request) {

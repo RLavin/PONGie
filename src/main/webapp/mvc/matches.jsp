@@ -93,7 +93,7 @@
                         <td><c:out value="${aMatch.winner.name}"/></td>
                         <td><c:out value="${aMatch.winningScore}"/></td>
                         <td><c:out value="${aMatch.loser.name}"/></td>
-                        <td><c:out value="${aMatch.loosingScore}"/></td>
+                        <td><c:out value="${aMatch.losingScore}"/></td>
                         <td><c:out value="${aMatch.dates}"/></td>
                         <td><a href="/mvc/match/delete?id=<c:out value="${aMatch.id}"/>">Remove Match</a></td>
 

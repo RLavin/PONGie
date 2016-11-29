@@ -20,7 +20,7 @@ public class Match {
     @JoinColumn(name = "losing_player_id_fk")
     private Player loser;
     private int winningScore;
-    private int loosingScore;
+    private int losingScore;
     private String dates;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,11 +29,11 @@ public class Match {
     public Match() {
     }
 
-    public Match(Player winner, Player loser, int winningScore, int loosingScore, String dates) {
+    public Match(Player winner, Player loser, int winningScore, int losingScore, String dates) {
         this.winner = winner;
         this.loser = loser;
         this.winningScore = winningScore;
-        this.loosingScore = loosingScore;
+        this.losingScore = losingScore;
         this.dates = dates;
     }
 
@@ -61,12 +61,12 @@ public class Match {
         this.winningScore = winningScore;
     }
 
-    public int getLoosingScore() {
-        return loosingScore;
+    public int getLosingScore() {
+        return losingScore;
     }
 
-    public void setLoosingScore(int loosingScore) {
-        this.loosingScore = loosingScore;
+    public void setLosingScore(int losingScore) {
+        this.losingScore = losingScore;
     }
 
     public String getDates() {

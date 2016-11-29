@@ -11,12 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by Raul on 11/14/16.
@@ -31,7 +28,12 @@ public class PongController {
     @Autowired
     MatchRepository matchRepository = null;
 
-
+    /**
+     * Gets all players from the database
+     *
+     * @param model saves all players to a model attribute
+     * @return homepage of players
+     */
     @RequestMapping(value = "allplayers", method = RequestMethod.GET)
     public String allPlayers(Model model) {
 
@@ -46,6 +48,11 @@ public class PongController {
         return "/home";
     }
 
+    /**
+     * Gets all matches from the database
+     * @param model saves all matches to a model attribute
+     * @return homepage of matches
+     */
     @RequestMapping(value = "allmatches", method = RequestMethod.GET)
     public String allMatches(Model model) {
 
@@ -61,6 +68,11 @@ public class PongController {
         return "/matches";
     }
 
+    /**
+     * Deletes match by id
+     * @param id
+     * @return homepage of matches
+     */
     @RequestMapping(value = "match/delete", method = RequestMethod.GET)
     public String deleteMatch(@RequestParam("id") Long id) {
 
@@ -76,6 +88,14 @@ public class PongController {
         return "redirect:/mvc/allmatches";
     }
 
+    /**
+     * Deletes player by id if player doesn't have matches,
+     * Must delete player's matches to delete player
+     *
+     * @param id
+     * @param model
+     * @return homepage of players
+     */
     @RequestMapping(value = "player/delete", method = RequestMethod.GET)
     public String deletePlayer(@RequestParam("id") Long id, Model model) {
 
@@ -87,7 +107,7 @@ public class PongController {
                 ||(fetchedplayer.getLosses() != null && fetchedplayer.getLosses().size()>0)) {
 
             // handle error?
-            model.addAttribute("delete_error_message", "Must delete player's matches first before deleting player!");
+            model.addAttribute("delete_error_message", "Must delete player's matches before deleting player!");
         }
         else if(fetchedplayer != null){
 
@@ -102,6 +122,12 @@ public class PongController {
         return "forward:/mvc/allplayers";
     }
 
+    /**
+     * Saves a player to the database
+     * @param aPlayer
+     * @return homepage of players
+     */
+
     @RequestMapping(value = "player/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addPlayer(Player aPlayer) {
         playerRepository.save(aPlayer);
@@ -110,6 +136,12 @@ public class PongController {
         return "redirect:/mvc/allplayers";
     }
 
+    /**
+     * Saves a match to the database
+     * Also checks if the match already has and Id, if so update match
+     * @param aMatch
+     * @return homepage of matches
+     */
     @RequestMapping(value = "match/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addMatch(DtoMatch aMatch) {
         Match match = null;
@@ -130,7 +162,7 @@ public class PongController {
            log.debug("winner:" + playerWinner);
 
            match.setWinningScore(aMatch.getWinningScore());
-           match.setLoosingScore(aMatch.getLoosingScore());
+           match.setLosingScore(aMatch.getLoosingScore());
            match.setDates(aMatch.getDates());
            match.setLoser(playerLoser);
            match.setWinner(playerWinner);
@@ -143,6 +175,12 @@ public class PongController {
         return "redirect:/mvc/allmatches";
     }
 
+    /**
+     * Selects player by id and saves it to an attribute
+     * @param id
+     * @param model myEdit
+     * @return edit_player.jsp
+     */
     @RequestMapping(value = "player/select", method = RequestMethod.GET)
     public String selectPlayer(@RequestParam("id") Long id, Model model) {
         String destination = "/edit_player";
@@ -157,6 +195,12 @@ public class PongController {
         return destination;
     }
 
+    /**
+     * Selects a match by id and saves it to an attribute
+     * @param id
+     * @param model myEdit
+     * @return edit_match.jsp
+     */
     @RequestMapping(value = "match/select", method = RequestMethod.GET)
     public String selectMatch(@RequestParam("id") Long id, Model model) {
         String destination = "/edit_match";

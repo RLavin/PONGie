@@ -19,49 +19,66 @@ import java.sql.SQLException;
  */
 @RestController
 @RequestMapping(path = "/rest/match")
-public class MatchControler {
+public class MatchController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private MatchRepository matchRepository ;
 
     /** saves a new match to the database
+     * and auto-generates an Id
      *
      * @param aMatch
      * @return
      */
     @RequestMapping(value = "save", method = RequestMethod.POST, produces = "application/json")
     public Match save(@RequestBody Match aMatch){
-//        Match match = new Match();
-//        Player playerLoser = playerRepository.findByName(aMatch.getLoser());
-//        Player playerWinner = playerRepository.findByName(aMatch.getWinner());
-//        match.setWinningScore(aMatch.getWinningScore());
-//        match.setLoosingScore(aMatch.getLoosingScore());
-//        match.setDates(aMatch.getDates());
-//        match.setLoser(playerLoser);
-//        match.setWinner(playerWinner);
+
         matchRepository.save(aMatch);
         return matchRepository.findOne(aMatch.getId());
     }
 
+    /**
+     * Updates a match by Id
+     * @param aMatch
+     * @return
+     */
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     public Match update(@RequestBody Match aMatch){
         matchRepository.save(aMatch);
         return matchRepository.findOne(aMatch.getId());
     }
 
+    /**
+     * Finds a match by Id
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "get/{id}", method = RequestMethod.GET)
     public Match show(@PathVariable Long id){
         return matchRepository.findOne(id);
     }
 
 
-
+    /**
+     * Delete match by id
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     public Match delete(@PathVariable Long id){
         Match deleted = matchRepository.findOne(id);
         matchRepository.delete(id);
         return deleted;
     }
+
+    /**
+     * List all matches and filters by page,size, direction and sortby id.
+     * @param page
+     * @param size
+     * @param sortby
+     * @param direction
+     * @return
+     */
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public Iterable<Match> list (@RequestParam(value ="page", required = false)Integer page,
                                  @RequestParam(value = "size", required = false)Integer size,
@@ -94,10 +111,14 @@ public class MatchControler {
     }
 
 
-
+    /**
+     * Handles exceptions
+     * @param e
+     * @return
+     */
     @ExceptionHandler(value = Throwable.class)
     public String nfeHandler(Throwable e){
         e.printStackTrace();
-        return "Something Bad Went Wrong!!!";
+        return "Something Went Wrong!!!";
     }
 }

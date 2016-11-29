@@ -16,38 +16,66 @@ import java.sql.SQLException;
  */
 @RestController
 @RequestMapping(path = "/rest/player")
-public class PlayerControler {
+public class PlayerController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private PlayerRepository playerRepository;
 
-
+    /**
+     * Save a player to the datebase
+     * And auto-generates an Id
+     * @param aPlayer
+     * @return
+     */
     @RequestMapping(value = "save", method = RequestMethod.POST, produces = "application/json")
     public Player save(@RequestBody Player aPlayer){
         playerRepository.save(aPlayer);
         return playerRepository.findOne(aPlayer.getId());
     }
 
+    /**
+     * Updates player by Id
+     * @param aPlayer
+     * @return
+     */
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     public Player update(@RequestBody Player aPlayer){
         playerRepository.save(aPlayer);
         return playerRepository.findOne(aPlayer.getId());
     }
 
+    /**
+     * Finds player by Id
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "get/{id}", method = RequestMethod.GET)
     public Player show(@PathVariable Long id){
         return playerRepository.findOne(id);
     }
 
 
-
+    /**
+     * Delete player by Id
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     public Player delete(@PathVariable Long id){
         Player deleted = playerRepository.findOne(id);
         playerRepository.delete(id);
         return deleted;
     }
+
+    /**
+     * Finds and list all players and filters them by page, size, direction and sortby name.
+     * @param page
+     * @param size
+     * @param sortby
+     * @param direction
+     * @return
+     */
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public Iterable<Player> list (@RequestParam(value ="page", required = false)Integer page,
                                   @RequestParam(value = "size", required = false)Integer size,
@@ -80,8 +108,11 @@ public class PlayerControler {
     }
 
 
-
-
+    /**
+     * Handles Exceptions
+     * @param e
+     * @return
+     */
     @ExceptionHandler(value = Throwable.class)
     public String nfeHandler(Throwable e){
         e.printStackTrace();

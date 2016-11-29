@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityFilter implements javax.servlet.Filter {
 
     @Override
+    /**
+     * Checks for the  x-authorization-key based authentication
+     */
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
 
         HttpServletResponse res = (HttpServletResponse) response;
         HttpServletRequest req = (HttpServletRequest) request;
 
-        // check for key based authentication
         boolean authorized = false;
         String key = req.getHeader("x-authorization-key");
         if(key != null){

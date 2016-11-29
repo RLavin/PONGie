@@ -100,7 +100,7 @@
                     </tr>
                     <tr>
                         <td>Loser Score:</td>
-                        <td><input type="text" name="loosingScore"></td>
+                        <td><input type="text" name="losingScore"></td>
                     </tr>
                     <tr>
                         <td>Date:</td>
