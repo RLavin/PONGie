@@ -106,7 +106,7 @@
     </style>
 </head>
 <body>
-<h1>Ping Pong Scoreboard</h1>
+<h1>PONGie</h1>
 
 <c:if test="${error_message != null}">
     <div class="alert alert-danger"><c:out value="${error_message}"/></div>

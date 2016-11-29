@@ -91,7 +91,7 @@
                 <table class="table">
                     <tr>
                         <td>Winner:</td>
-                        <td><input type="text" name="winner" value="<c:out value="${myEdit.winner.name}"/>"></td>
+                        <td><input type="text" name="winner" value="<c:out value="${myEdit.winner.name}"/>"readonly></td>
                     </tr>
                     <tr>
                         <td>Winner Score:</td>
@@ -99,7 +99,7 @@
                     </tr>
                     <tr>
                         <td>Loser:</td>
-                        <td><input type="text" name="loser" value="<c:out value="${myEdit.loser.name}"/>"></td>
+                        <td><input type="text" name="loser" value="<c:out value="${myEdit.loser.name}"/>"readonly></td>
                     </tr>
                     <tr>
                         <td>Loser Score:</td>

@@ -31,7 +31,7 @@ public class PongController {
     /**
      * Gets all players from the database
      *
-     * @param model saves all players to a model attribute
+     * @param model saves all players to allplayers attribute
      * @return homepage of players
      */
     @RequestMapping(value = "allplayers", method = RequestMethod.GET)
@@ -151,21 +151,24 @@ public class PongController {
         }else {
            //new
             match = new Match();
+           Player playerLoser = playerRepository.findById(aMatch.getLoserId());
+           Player playerWinner = playerRepository.findById(aMatch.getWinnerId());
+           log.debug("winner:" + playerWinner);
+           log.debug("loser:" + playerLoser);
+           match.setLoser(playerLoser);
+           match.setWinner(playerWinner);
        }
            log.debug("Match Add called...");
 
-           Player playerLoser = playerRepository.findByName(aMatch.getLoser());
-           Player playerWinner = playerRepository.findByName(aMatch.getWinner());
-           log.debug("loserName:" + aMatch.getLoser());
-           log.debug("loser:" + playerLoser);
-           log.debug("winnerName:" + aMatch.getWinner());
-           log.debug("winner:" + playerWinner);
+
+           log.debug("loserName:" + aMatch.getLoserId());
+           log.debug("winnerName:" + aMatch.getWinnerId());
+
 
            match.setWinningScore(aMatch.getWinningScore());
-           match.setLosingScore(aMatch.getLoosingScore());
+           match.setLosingScore(aMatch.getLosingScore());
            match.setDates(aMatch.getDates());
-           match.setLoser(playerLoser);
-           match.setWinner(playerWinner);
+
 
 
         matchRepository.save(match);
@@ -212,6 +215,25 @@ public class PongController {
 
         // send them to the match edit page
         return destination;
+    }
+
+    /**
+     * Gets all players from the database
+     * @param model saves all players to allPlayersId attribute
+     * @return to Log a match page
+     */
+    @RequestMapping(value = "player/selectId", method = RequestMethod.GET)
+    public String selectPlayerId( Model model) {
+        String destination = "/add_match";
+        // re fetch player by id from db
+        Iterable<Player> playersbyId = playerRepository.findAll();
+
+        // put them in a model
+        model.addAttribute("allPlayersId", playersbyId);
+
+        // send them to the Log a match page
+        return destination;
+
     }
 
 }

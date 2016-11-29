@@ -4,27 +4,27 @@ package com.ironyard.dto;
  * Created by Raul on 11/22/16.
  */
 public class DtoMatch {
-    private String winner;
-    private String loser;
+    private long winnerId;
+    private long loserId;
     private int winningScore;
-    private int loosingScore;
+    private int losingScore;
     private String dates;
     private long id;
 
-    public String getWinner() {
-        return winner;
+    public long getWinnerId() {
+        return winnerId;
     }
 
-    public void setWinner(String winner) {
-        this.winner = winner;
+    public void setWinnerId(long winnerId) {
+        this.winnerId = winnerId;
     }
 
-    public String getLoser() {
-        return loser;
+    public long getLoserId() {
+        return loserId;
     }
 
-    public void setLoser(String loser) {
-        this.loser = loser;
+    public void setLoserId(long loserId) {
+        this.loserId = loserId;
     }
 
     public int getWinningScore() {
@@ -35,12 +35,12 @@ public class DtoMatch {
         this.winningScore = winningScore;
     }
 
-    public int getLoosingScore() {
-        return loosingScore;
+    public int getLosingScore() {
+        return losingScore;
     }
 
-    public void setLoosingScore(int loosingScore) {
-        this.loosingScore = loosingScore;
+    public void setLosingScore(int losingScore) {
+        this.losingScore = losingScore;
     }
 
     public String getDates() {

@@ -71,7 +71,7 @@
         <nav>
             <ul class="nav nav-pills pull-right">
                 <li role="presentation"><a href="/mvc/allplayers">Players</a></li>
-                <li role="presentation"class="active"><a href="/mvc/add_match.jsp">Log A Match</a></li>
+                <li role="presentation"class="active"><a href="/mvc/player/selectId">Log A Match</a></li>
                 <li role="presentation"><a href="/mvc/allmatches">Matches</a></li>
                 <li role="presentation"><a href="/mvc/logout">Logout</a></li>
             </ul>
@@ -88,15 +88,30 @@
                 <table class="table">
                     <tr>
                         <td>Winner:</td>
-                        <td><input type="text" name="winner"></td>
+                        <td>
+                            <select name="winnerId">
+                         <c:forEach items="${allPlayersId}" var="aPlayers">
+                          <option value="<c:out value="${aPlayers.id}"/>"><c:out value="${aPlayers.name}"/></option>
+                          </c:forEach>
+                            </select>
+
+                        </td>
                     </tr>
                     <tr>
                         <td>Winner Score:</td>
-                        <td><input type="text" name="winningScore"></td>
+                        <td><input type="text" name="winningScore">
+                        </td>
                     </tr>
                     <tr>
                         <td>Loser:</td>
-                        <td><input type="text" name="loser"></td>
+                        <td>
+                            <select name="loserId">
+                                <c:forEach items="${allPlayersId}" var="aPlayers">
+                                    <option value="<c:out value="${aPlayers.id}"/>"><c:out value="${aPlayers.name}"/></option>
+                                </c:forEach>
+                            </select>
+
+                        </td>
                     </tr>
                     <tr>
                         <td>Loser Score:</td>

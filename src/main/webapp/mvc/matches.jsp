@@ -58,7 +58,7 @@
             <ul class="nav nav-pills pull-right">
                 <li role="presentation"><a href="/mvc/allplayers">Players</a></li>
                 <li role="presentation"class="active"><a href="/mvc/allmatches">Matches</a></li>
-                <li role="presentation"><a href="/mvc/add_match.jsp">Log A Match</a></li>
+                <li role="presentation"><a href="/mvc/player/selectId">Log A Match</a></li>
                 <li role="presentation"><a href="/mvc/logout">Logout</a></li>
             </ul>
         </nav>
