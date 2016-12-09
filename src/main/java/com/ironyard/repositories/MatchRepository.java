@@ -12,7 +12,4 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface MatchRepository extends PagingAndSortingRepository<Match, Long> {
 
 
-/*    @Query("SELECT COUNT (*) FROM DtoMatch m WHERE (m.playerOne= ?1 and m.playerOneScore > m.playerTwoScore) OR (m.playerTwo =?1 and m.playerTwoScore>m.playerOneScore)")
-    int countWinsForPlayer(String playername);
-*/
 }

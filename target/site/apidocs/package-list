@@ -1,0 +1,7 @@
+com.ironyard
+com.ironyard.controler.mvc
+com.ironyard.controler.rest
+com.ironyard.data
+com.ironyard.dto
+com.ironyard.repositories
+com.ironyard.security

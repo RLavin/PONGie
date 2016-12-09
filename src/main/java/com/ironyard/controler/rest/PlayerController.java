@@ -31,6 +31,8 @@ public class PlayerController {
     @RequestMapping(value = "save", method = RequestMethod.POST, produces = "application/json")
     public Player save(@RequestBody Player aPlayer){
         playerRepository.save(aPlayer);
+        log.info(" Saved player: "+ aPlayer);
+
         return playerRepository.findOne(aPlayer.getId());
     }
 
@@ -42,6 +44,8 @@ public class PlayerController {
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     public Player update(@RequestBody Player aPlayer){
         playerRepository.save(aPlayer);
+        log.info("Updated player:"+ aPlayer);
+
         return playerRepository.findOne(aPlayer.getId());
     }
 
@@ -52,6 +56,7 @@ public class PlayerController {
      */
     @RequestMapping(value = "get/{id}", method = RequestMethod.GET)
     public Player show(@PathVariable Long id){
+        log.info("Player id:"+ id);
         return playerRepository.findOne(id);
     }
 
@@ -65,6 +70,8 @@ public class PlayerController {
     public Player delete(@PathVariable Long id){
         Player deleted = playerRepository.findOne(id);
         playerRepository.delete(id);
+        log.info("Deleted player id:"+ id);
+
         return deleted;
     }
 

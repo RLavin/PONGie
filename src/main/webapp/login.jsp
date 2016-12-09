@@ -116,6 +116,8 @@
         <h2 class="form-signin-heading">Please login</h2>
         <input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
         <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+        <p><i><strong>Username:</strong>  Raul<br>
+              <strong>Password:</strong> Skymall</i></p>
         <label class="checkbox">
             <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
         </label>

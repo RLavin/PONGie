@@ -32,8 +32,8 @@ public class MatchController {
      */
     @RequestMapping(value = "save", method = RequestMethod.POST, produces = "application/json")
     public Match save(@RequestBody Match aMatch){
-
         matchRepository.save(aMatch);
+        log.info(" Saved match: "+ aMatch);
         return matchRepository.findOne(aMatch.getId());
     }
 
@@ -45,6 +45,7 @@ public class MatchController {
     @RequestMapping(value = "update", method = RequestMethod.PUT)
     public Match update(@RequestBody Match aMatch){
         matchRepository.save(aMatch);
+        log.info("Updated Match:"+ aMatch);
         return matchRepository.findOne(aMatch.getId());
     }
 
@@ -55,6 +56,7 @@ public class MatchController {
      */
     @RequestMapping(value = "get/{id}", method = RequestMethod.GET)
     public Match show(@PathVariable Long id){
+        log.info("Match id:"+ id);
         return matchRepository.findOne(id);
     }
 
@@ -68,6 +70,8 @@ public class MatchController {
     public Match delete(@PathVariable Long id){
         Match deleted = matchRepository.findOne(id);
         matchRepository.delete(id);
+        log.info("Deleted matched id:"+ id);
+
         return deleted;
     }
 

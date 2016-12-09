@@ -40,6 +40,8 @@ public class PongController {
         // get all players
         Iterable<Player> allPlayers = playerRepository.findAll();
 
+        log.info("Display all players: "+ allPlayers);
+
 
         // put them in a model
         model.addAttribute("all_players", allPlayers);
@@ -60,6 +62,7 @@ public class PongController {
         // get all matches
         Iterable<Match> allMatches = matchRepository.findAll();
 
+        log.info("Display all matches: "+ allMatches);
 
         // put them in a model
         model.addAttribute("all_matches", allMatches);
@@ -83,6 +86,7 @@ public class PongController {
         if (fetchmatch != null) {
             matchRepository.delete(fetchmatch);
         }
+        log.info("Match that has been deletec: "+ fetchmatch);
 
         // send them back to the home match page
         return "redirect:/mvc/allmatches";
@@ -103,6 +107,7 @@ public class PongController {
         Player fetchedplayer = playerRepository.findOne(id);
 
 
+
         if ((fetchedplayer.getWins() != null && fetchedplayer.getWins().size()>0 )
                 ||(fetchedplayer.getLosses() != null && fetchedplayer.getLosses().size()>0)) {
 
@@ -117,7 +122,7 @@ public class PongController {
             model.addAttribute("delete_error_message", "Player not found!");
 
         }
-
+          log.debug("Player that is being deleted: "+ fetchedplayer);
         // send them back to the home player page
         return "forward:/mvc/allplayers";
     }
@@ -130,7 +135,9 @@ public class PongController {
 
     @RequestMapping(value = "player/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String addPlayer(Player aPlayer) {
+
         playerRepository.save(aPlayer);
+        log.debug("Added player: "+ aPlayer);
 
         // send them back to the home player page
         return "redirect:/mvc/allplayers";
@@ -189,8 +196,7 @@ public class PongController {
         String destination = "/edit_player";
         // re fetch player by id from db
         Player playerEdit = playerRepository.findOne(id);
-        //playerEdit.setWins(matchRepository.countWinsForPlayer(playerEdit.getName()));
-
+        log.info("Display player edit: "+ playerEdit);
         // put them in a model
         model.addAttribute("myEdit", playerEdit);
 
@@ -210,6 +216,8 @@ public class PongController {
         // re fetch player by id from db
         Match matchEdit = matchRepository.findOne(id);
 
+        log.info("Display match edit: "+ matchEdit);
+
         // put them in a model
         model.addAttribute("myEdit", matchEdit);
 
@@ -227,6 +235,8 @@ public class PongController {
         String destination = "/add_match";
         // re fetch player by id from db
         Iterable<Player> playersbyId = playerRepository.findAll();
+
+        log.info("Display all players: "+ playersbyId);
 
         // put them in a model
         model.addAttribute("allPlayersId", playersbyId);
